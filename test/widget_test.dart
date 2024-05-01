@@ -1,30 +1,33 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:choretl/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const ChoreApp());
+  group('ChoreApp Tests', () {
+    testWidgets('App should build its widget tree without any issues', (WidgetTester tester) async {
+      await tester.pumpWidget(const ChoreApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      expect(find.byType(MaterialApp), findsOneWidget);
+      expect(find.byType(ChorePage), findsOneWidget);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    testWidgets('Adding a new chore should update the list', (WidgetTester tester) async {
+      await tester.pumpWidget(const ChoreApp());
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      // Simulate adding a chore
+      await tester.tap(find.byIcon(Icons.add)); // assuming the FAB works perfectly
+      await tester.pumpAndSettle(); // Wait for the new page to open
+
+      // Simulate entering information in the AddChorePage
+      await tester.enterText(find.byType(TextField).first, 'Test Chore');
+      await tester.enterText(find.byType(TextField).last, 'Test Description');
+      await tester.tap(find.text('Save Chore'));
+      await tester.pumpAndSettle(); // Wait for the new chore to be added and the page to pop
+
+      // Verify the chore has been added
+      expect(find.text('Test Chore'), findsOneWidget);
+      expect(find.text('Test Description'), findsOneWidget);
+    });
   });
 }

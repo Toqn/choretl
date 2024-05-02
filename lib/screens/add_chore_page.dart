@@ -26,23 +26,24 @@ class AddChorePageState extends State<AddChorePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Chore'),
+        title: const Text('Add Chore'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
-              decoration: InputDecoration(labelText: 'Chore Name'),
+              decoration: const InputDecoration(labelText: 'Chore Name'),
               onChanged: (value) => setState(() => choreName = value),
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Description (Optional)'),
+              decoration:
+                  const InputDecoration(labelText: 'Description (Optional)'),
               onChanged: (value) => setState(() => choreDescription = value),
             ),
             ElevatedButton(
               onPressed: _saveChore,
-              child: Text('Save Chore'),
+              child: const Text('Save Chore'),
             ),
           ],
         ),

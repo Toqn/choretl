@@ -62,7 +62,7 @@ class _ChorePageState extends State<ChorePage> {
 
   Future<void> _addNewChore(BuildContext context) async {
     final newChore = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AddChorePage()));
+        context, MaterialPageRoute(builder: (context) => const AddChorePage()));
     if (newChore != null) {
       setState(() {
         chores.add(newChore);
